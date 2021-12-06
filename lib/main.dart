@@ -1,3 +1,4 @@
+import 'package:demotest/produce.dart';
 import 'package:flutter/material.dart';
 import 'about_page.dart';
 
@@ -19,18 +20,20 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
+  final Product product =
+      Product(name: "我是商品名稱", desc: "我是商品描述", price: 999999, stock: 66);
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        child: Text("About"),
+        child: Text("to About"),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AboutPage(),
+              builder: (context) => AboutPage(product: product),
             ),
           );
         },
