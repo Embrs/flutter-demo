@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -42,10 +44,8 @@ class HomePage extends StatelessWidget {
           ElevatedButton(
             child: const Text("Alart Dialog"),
             onPressed: () async {
-              final CONFIRM_ACTION? action = await showMyAlart(context);
-              if (action == CONFIRM_ACTION.ok) {
-                print("IsOK");
-              }
+              final ResObj? resObj = await showMyAlart(context);
+              print("${resObj?.ans}:${resObj?.value}");
             },
           ),
         ],
@@ -55,23 +55,47 @@ class HomePage extends StatelessWidget {
 }
 
 enum CONFIRM_ACTION { ok, cancel }
-Future<CONFIRM_ACTION?> showMyAlart(BuildContext context) {
-  return showDialog<CONFIRM_ACTION>(
+
+class ResObj {
+  CONFIRM_ACTION? ans;
+  String? value;
+}
+
+Future<ResObj?> showMyAlart(BuildContext context) {
+  var resObj = new ResObj();
+  return showDialog<ResObj>(
     context: context,
     builder: (context) {
       return AlertDialog(
         title: const Text("測試標題"),
-        content: const Text("測試內容...."),
+        content: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                autofocus: true,
+                decoration: const InputDecoration(
+                  labelText: "測試可輸入資料對話視窗",
+                  hintText: "請輸入資料...",
+                ),
+                onChanged: (value) {
+                  resObj.value = value;
+                },
+              ),
+            )
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(CONFIRM_ACTION.cancel);
+              resObj.ans = CONFIRM_ACTION.cancel;
+              Navigator.of(context).pop(resObj);
             },
             child: const Text("取消"),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop(CONFIRM_ACTION.ok);
+              resObj.ans = CONFIRM_ACTION.ok;
+              Navigator.of(context).pop(resObj);
             },
             child: const Text("確定"),
           ),
