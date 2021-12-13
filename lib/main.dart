@@ -3,31 +3,22 @@ import 'package:demotest/pages/chat_page.dart';
 import 'package:demotest/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'widgets/drawer_main.dart';
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  final List<Tab> myTabs = <Tab>[
-    const Tab(text: "Home"),
-    const Tab(text: "Chat"),
-    const Tab(text: "Account"),
-  ];
+void main() => runApp(const MaterialApp(home: MyApp()));
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _currentIndex = 0;
+  final pages = [HomePage(), ChatPage(), AccountPage()];
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: myTabs.length,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text("is title"),
-            bottom: TabBar(tabs: myTabs),
-          ),
-          body: const TabBarView(
-            children: [HomePage(), ChatPage(), AccountPage()],
-          ),
-        ),
-      ),
-    );
+    return DrawerMenu();
   }
 }
