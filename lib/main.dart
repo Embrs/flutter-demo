@@ -9,13 +9,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("${0.1 + 0.2}")),
-      body: ListViewDemo(),
+      body: GridDemo(),
     );
   }
 }
 
-class ListViewDemo extends StatelessWidget {
-  ListViewDemo({Key? key}) : super(key: key);
+class GridDemo extends StatelessWidget {
+  GridDemo({Key? key}) : super(key: key);
   final List<Product> listItems = List<Product>.generate(
     500,
     (index) => Product(
@@ -25,16 +25,12 @@ class ListViewDemo extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ListView.builder(
-        itemCount: listItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: listItems[index].icon,
-            title: Text("${listItems[index].name}"),
-            subtitle: Text("${listItems[index].price}"),
-          );
-        },
+    return GridView.builder(
+      itemCount: listItems.length,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (context, index) => Center(
+        child: Text("${listItems[index].name}"),
       ),
     );
   }
