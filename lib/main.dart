@@ -8,36 +8,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Harry Title")),
-      body: StackDemo(),
+      appBar: AppBar(title: Text("${0.1 + 0.2}")),
+      body: Demo(),
     );
   }
 }
 
-class StackDemo extends StatelessWidget {
-  const StackDemo({Key? key}) : super(key: key);
+class Demo extends StatelessWidget {
+  Demo({Key? key}) : super(key: key);
+  final List<Widget> list = [
+    const ListTile(
+      leading: Icon(Icons.event_available, color: Colors.blue),
+      title: Text(
+        "Test List 1",
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+      ),
+      subtitle: Text("Test List 1"),
+    ),
+    const ListTile(
+      leading: Icon(Icons.event_available, color: Colors.blue),
+      title: Text(
+        "Test List 2",
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+      ),
+      subtitle: Text("Test List 1"),
+    ),
+    const ListTile(
+      leading: Icon(Icons.event_available, color: Colors.blue),
+      title: Text(
+        "Test List 3",
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+      ),
+      subtitle: Text("Test List 1"),
+    )
+  ];
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(
-        // 對齊
-        // alignment: Alignment.bottomRight,
-
-        children: [
-          Container(
-            color: Colors.amber,
-            child: const Text("111", style: TextStyle(fontSize: 100)),
-          ),
-          Positioned(
-            child: Container(
-              color: Colors.red,
-              child: const Text("222", style: TextStyle(fontSize: 50)),
-            ),
-            top: 10,
-            left: 10,
-          )
-        ],
-      ),
-    );
+        child: ListView(
+      children: list,
+    ));
   }
 }
