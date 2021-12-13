@@ -1,24 +1,43 @@
-import 'package:demotest/pages/account_page.dart';
-import 'package:demotest/pages/chat_page.dart';
-import 'package:demotest/pages/home_page.dart';
 import 'package:flutter/material.dart';
-
-import 'widgets/drawer_main.dart';
 
 void main() => runApp(const MaterialApp(home: MyApp()));
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Harry Title")),
+      body: StackDemo(),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  int _currentIndex = 0;
-  final pages = [HomePage(), ChatPage(), AccountPage()];
+class StackDemo extends StatelessWidget {
+  const StackDemo({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return DrawerMenu();
+    return Center(
+      child: Stack(
+        // 對齊
+        // alignment: Alignment.bottomRight,
+
+        children: [
+          Container(
+            color: Colors.amber,
+            child: const Text("111", style: TextStyle(fontSize: 100)),
+          ),
+          Positioned(
+            child: Container(
+              color: Colors.red,
+              child: const Text("222", style: TextStyle(fontSize: 50)),
+            ),
+            top: 10,
+            left: 10,
+          )
+        ],
+      ),
+    );
   }
 }
